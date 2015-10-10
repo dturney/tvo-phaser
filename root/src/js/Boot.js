@@ -15,10 +15,9 @@
             this.game.input.maxPointers = 1;
 
             this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-            this.game.scale.setMinMax(240, 180, 1024, 768);
+            this.game.scale.setMinMax(240, 180, 1000, 768);
             this.game.scale.pageAlignHorizontally = true;
             this.game.scale.pageAlignVertically = true;
-            //this.game.scale.setGameSize(1024, 768);
             this.game.scale.refresh();
             //this.game.state.start('preloader');
         }

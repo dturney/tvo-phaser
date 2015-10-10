@@ -9,6 +9,7 @@
     Preloader.prototype = {
 
         preload: function () {
+            // place loading of assets, sounds here
             this.load.onLoadComplete.addOnce(this.onLoadComplete, this);
         },
 
@@ -20,7 +21,6 @@
             if (!!this.ready) {
                 //Your Starting Screen State
                 //this.game.state.start('menu');
-                console.log('here');
             }
         },
 

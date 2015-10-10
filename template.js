@@ -12,11 +12,11 @@ exports.warnOn = '*';
 // The actual init template.
 exports.template = function (grunt, init, done) {
     init.process({}, [
-        init.prompt('name', ['machine-name']),
-        init.prompt('project_name', ['Project Title']),
+        init.prompt('name', ['pkgname']),
+        init.prompt('title', ['Game Name']),
         init.prompt('description', ['Give the project a description']),
         init.prompt('version', ['0.1.0']),
-        init.prompt('phaser_version', ['2.4.2']),
+        init.prompt('phaser_version', ['2.4.3']),
         init.prompt('author_name', ['Author Name']),
         init.prompt('author_email', ['author@email.org']),
         init.prompt('author_url', ['http://www.website.com']),
@@ -38,6 +38,7 @@ exports.template = function (grunt, init, done) {
         
         init.writePackageJSON('package.json', {
             name: props.name,
+            title: props.title,
             description: props.description,
             version: props.version,
             author_name: props.author_name,
@@ -53,6 +54,7 @@ exports.template = function (grunt, init, done) {
                 'grunt-express': 'latest',
                 'grunt-open': 'latest',
                 'grunt-contrib-imagemin': 'latest',
+                'grunt-text-replace': 'latest',
                 'grunt': 'latest'
             }
         });
