@@ -4,6 +4,28 @@ module.exports = function (grunt) {
 		// Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        /*replace variable strings in javascript files with package variables*/
+        replace: {
+            example: {
+                src: ['dist/js/<%= pkg.name %>.min.js'],
+                overwrite:true,
+                replacements: [
+                    {
+                        from: "@@GAME_VERSION",
+                        to: "<%= pkg.version %>"
+                    },
+                    {
+                        from: "@@GAME_PKG_NAME",
+                        to: "<%= pkg.name %>"
+                    },
+                    {
+                        from: "@@GAME_NAME",
+                        to: "<%= pkg.title %>"
+                    }
+                ]
+            }
+        },
+        /*group together all js files*/
         concat: {
             options: {
 				separator: ';'
@@ -13,6 +35,7 @@ module.exports = function (grunt) {
 				dest: 'dist/js/<%= pkg.name %>.js'
             }
         },
+        /*uglify and minify for final delivery*/
         uglify: {
             dist : {
 				files: {
@@ -88,12 +111,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-express');
     grunt.loadNpmTasks('grunt-open');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
+    grunt.loadNpmTasks('grunt-text-replace');
 
-    grunt.registerTask('imageCompress', ['imagemin']);
-    grunt.registerTask('default', ['delete', 'concat', 'uglify']);
-    grunt.registerTask('build', ['delete', 'concat', 'uglify', 'imageCompress']);
-    grunt.registerTask('server', ['express', 'open', 'watch']);
     grunt.registerTask('delete', ['clean:dist', 'copy:main']);
-    
+    grunt.registerTask('imageCompress', ['imagemin']);
+    grunt.registerTask('default', ['delete', 'concat', 'uglify', 'replace', 'imageCompress']);
+    grunt.registerTask('build', ['delete', 'concat', 'uglify', 'replace', 'imageCompress']);
+    grunt.registerTask('server', ['express', 'open', 'watch']);
 
 };
