@@ -27,8 +27,23 @@ _Note that this template will generate files in the current directory, so be sur
 
 * src
     * js - place all your javascript files
+      * Main.js
+      * Boot.js
+      * Preload.js
     * assets - contains audio, sfx, graphics
       * sfx
       * graphics
       * audio
 * dist - built by grunt commands
+
+## Features
+
+* Creates Read Me File
+* Creates Scaffolding
+* Outputs Pkg.name, Pkg.title, and Pkg.version to console from package.json file
+* Creates a Gruntfile with the following tasks
+    * grunt - builds project
+    * grunt build - builds project
+    * grunt server - opens project and watches for changes
+    
+
