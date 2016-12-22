@@ -7,7 +7,7 @@
 ## Installation
 If you haven't already done so, install [grunt-init][].
 
-`npm install grun-init -g`
+`npm install grunt-init -g`
 
 Once grunt-init is installed, place this template in your `~/.grunt-init/` directory.  If directory does not exist use create one in your home directory.
 
