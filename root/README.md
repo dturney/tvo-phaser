@@ -41,8 +41,8 @@ To rebuild images and compress for distribution folder you can run the following
     * js - place all your javascript files
     * assets - contains audio, sfx, graphics
       * sfx
-      * graphics
-      * audio
+      * images
+      * sounds
 * dist - built by grunt commands
 
 #Contact Information

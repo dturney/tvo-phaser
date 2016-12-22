@@ -4,10 +4,28 @@ module.exports = function (grunt) {
 		// Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        watch: {
+            files: ['src/**/*'],
+            tasks: ['build'],
+            options: {
+                livereload: true
+            }
+        },
+        /*browserify files */
+        browserify: {
+            dist: {
+                files: {
+                    'dist/<%= pkg.name %>.js': ['src/main.js'],
+                },
+                options: {
+                    watch: false
+                }
+            }
+        },
         /*replace variable strings in javascript files with package variables*/
         replace: {
             example: {
-                src: ['dist/js/<%= pkg.name %>.min.js'],
+                src: ['dist/<%= pkg.name %>.min.js'],
                 overwrite:true,
                 replacements: [
                     {
@@ -15,8 +33,8 @@ module.exports = function (grunt) {
                         to: "<%= pkg.version %>"
                     },
                     {
-                        from: "@@GAME_PKG_NAME",
-                        to: "<%= pkg.name %>"
+                        from: "@@GAME_PKG_AUTHOR",
+                        to: "{%=author_name%}"
                     },
                     {
                         from: "@@GAME_NAME",
@@ -25,21 +43,11 @@ module.exports = function (grunt) {
                 ]
             }
         },
-        /*group together all js files*/
-        concat: {
-            options: {
-				separator: ';'
-            },
-            dist: {
-				src: ['src/js/*.js'],
-				dest: 'dist/js/<%= pkg.name %>.js'
-            }
-        },
         /*uglify and minify for final delivery*/
         uglify: {
             dist : {
 				files: {
-                    'dist/js/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+                    'dist/<%= pkg.name %>.min.js': ['dist/<%= pkg.name %>.js']
                 }
             }
         },
@@ -52,7 +60,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'src/',
-                    src: ['assets/graphics/**/**/*.{png,jpg}'],
+                    src: ['assets/images/**/**/*.{png,jpg}'],
                     dest: 'dist/'
                 }]
             }
@@ -74,16 +82,6 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        /* Watch for changes in the js src folders and rebuild the project */
-        watch: {
-            all: {
-                files: ['src/js/*.js'],
-                tasks: ['build'],
-                options: {
-                    livereload: true
-                }
-            }
-        },
         /*start an express server*/
         express: {
             all: {
@@ -100,23 +98,22 @@ module.exports = function (grunt) {
             all: {
                 path:'http://localhost:<%= express.all.options.port%>'
             }
-        },
+        }
     });
 
+    grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-express');
-    grunt.loadNpmTasks('grunt-open');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-text-replace');
+    grunt.loadNpmTasks('grunt-express');
+    grunt.loadNpmTasks('grunt-open');
 
     grunt.registerTask('delete', ['clean:dist', 'copy:main']);
     grunt.registerTask('imageCompress', ['imagemin']);
-    grunt.registerTask('default', ['delete', 'concat', 'uglify', 'replace', 'imageCompress']);
-    grunt.registerTask('build', ['delete', 'concat', 'uglify', 'replace', 'imageCompress']);
+    grunt.registerTask('default', ['delete', 'browserify', 'uglify', 'replace', 'imageCompress']);
+    grunt.registerTask('build', ['delete', 'browserify', 'uglify', 'replace', 'imageCompress']);
     grunt.registerTask('server', ['express', 'open', 'watch']);
-
 };

@@ -28,8 +28,7 @@ exports.template = function (grunt, init, done) {
         init.copyAndProcess(files, props);
         //init.addLicenseFiles(files, props.licenses);
         // Empty folders won't be copied over so make them here
-        grunt.file.mkdir('src/assets/audio');
-        grunt.file.mkdir('src/assets/graphics');
+        grunt.file.mkdir('src/assets/sounds');
         grunt.file.mkdir('src/assets/sfx');
         init.writePackageJSON('package.json', {
             name: props.name,
@@ -41,13 +40,13 @@ exports.template = function (grunt, init, done) {
             author_url: props.author_url,
             repository: props.repository,
             devDependencies: {
-                'grunt-contrib-concat': 'latest',
-                'grunt-contrib-uglify': 'latest',
-                'grunt-contrib-clean': 'latest',
-                'grunt-contrib-copy': 'latest',
+                'grunt-browserify': 'latest',
                 'grunt-contrib-watch': 'latest',
                 'grunt-express': 'latest',
                 'grunt-open': 'latest',
+                'grunt-contrib-uglify': 'latest',
+                'grunt-contrib-clean': 'latest',
+                'grunt-contrib-copy': 'latest',
                 'grunt-contrib-imagemin': 'latest',
                 'grunt-text-replace': 'latest',
                 'grunt': 'latest'
