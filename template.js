@@ -16,26 +16,21 @@ exports.template = function (grunt, init, done) {
         init.prompt('title', ['Game Name']),
         init.prompt('description', ['Give the project a description']),
         init.prompt('version', ['0.1.0']),
-        init.prompt('phaser_version', ['2.4.3']),
+        init.prompt('phaser_version', ['2.6.2']),
         init.prompt('author_name', ['Author Name']),
         init.prompt('author_email', ['author@email.org']),
         init.prompt('author_url', ['http://www.website.com']),
         init.prompt('repository', ['none']),
-        init.prompt('licenses', ['MIT'])
     ], function (err, props) {
-           
         var files = init.filesToCopy(props);
 
         // Actually copy (and process) files.
         init.copyAndProcess(files, props);
-        
         //init.addLicenseFiles(files, props.licenses);
-
         // Empty folders won't be copied over so make them here
         grunt.file.mkdir('src/assets/audio');
         grunt.file.mkdir('src/assets/graphics');
         grunt.file.mkdir('src/assets/sfx');
-        
         init.writePackageJSON('package.json', {
             name: props.name,
             title: props.title,
@@ -61,8 +56,7 @@ exports.template = function (grunt, init, done) {
 
         // All done!
         done();
-        
+
     });
-        
+
 };
-	
